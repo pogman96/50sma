@@ -11,7 +11,7 @@ PERIOD = 365
 
 @st.cache()
 def run(_):
-    print("getting dat")
+    print("getting data")
     start = datetime.datetime.today().date() - datetime.timedelta(days=PERIOD)
     end = datetime.datetime.today().date() + datetime.timedelta(days=1)
 
@@ -95,6 +95,7 @@ def graphDiff(ticker: str):
 
 
 t = datetime.datetime.now().date()
+print(t)
 tickerList, copy = run(t)
 
 option = st.sidebar.selectbox('Ticker', sorted(tickerList))
