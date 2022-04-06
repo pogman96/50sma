@@ -7,13 +7,14 @@ import os
 
 THREAD_COUNT = 500
 PERIOD = 365
+TODAY = datetime.datetime.today().date()
 
 
 @st.cache()
 def run(_):
-    print("getting data")
-    start = datetime.datetime.today().date() - datetime.timedelta(days=PERIOD)
-    end = datetime.datetime.today().date() + datetime.timedelta(days=1)
+    print("getting dat")
+    start = TODAY - datetime.timedelta(days=PERIOD)
+    end = TODAY + datetime.timedelta(days=1)
 
     def clearNA(df):
         return (
@@ -93,10 +94,7 @@ def graphDiff(ticker: str):
     df = copy[[f"{ticker} difference", "zeros"]]
     return df
 
-
-t = datetime.datetime.now().date()
-print(t)
-tickerList, copy = run(t)
+tickerList, copy = run(TODAY)
 
 option = st.sidebar.selectbox('Ticker', sorted(tickerList))
 
@@ -106,6 +104,7 @@ dic = getDic(copy)
 
 top10diff = [f"{i} - {round(dic[i], 3)}%" for i in list(dic.keys())[-10:]]
 low10diff = [f"{i} - {round(dic[i], 3)}%" for i in list(dic.keys())[:10]]
+st.sidebar.text(str(TODAY))
 st.sidebar.subheader(f"Top 10 most volatile")
 for i in top10diff:
     st.sidebar.text(i)
